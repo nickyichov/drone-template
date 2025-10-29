@@ -220,6 +220,9 @@
   .w-40 {
     width: calc(var(--spacing) * 40);
   }
+  .w-96 {
+    width: calc(var(--spacing) * 96);
+  }
   .w-full {
     width: 100%;
   }
@@ -275,6 +278,9 @@
   }
   .p-10 {
     padding: calc(var(--spacing) * 10);
+  }
+  .text-center {
+    text-align: center;
   }
   .text-xs {
     font-size: var(--text-xs);

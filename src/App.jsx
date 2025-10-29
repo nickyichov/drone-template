@@ -32,10 +32,10 @@ export default function App() {
     return (
         <>
             <Header selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-            <div className="flex gap-2 w-full">
-                { selectedOption.includes("roll") && <div className={"border-1 p-2 w-28"}>Roll: {roll}</div>}
-                { selectedOption.includes("pitch") && <div className={"border-1 p-2 w-28"}>Pitch: {pitch}</div> }
-                { selectedOption.includes("yaw") && <div className={"border-1 p-2 w-28"}>Yaw: {yaw}</div> }
+            <div className="flex gap-2 w-full p-2">
+                { selectedOption.includes("roll") && <div className={"border-1 p-2 w-full text-center"}>Roll: {roll}</div>}
+                { selectedOption.includes("pitch") && <div className={"border-1 p-2 w-full text-center"}>Pitch: {pitch}</div> }
+                { selectedOption.includes("yaw") && <div className={"border-1 p-2 w-full text-center"}>Yaw: {yaw}</div> }
             </div>
         </>
     )
