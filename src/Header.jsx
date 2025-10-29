@@ -2,31 +2,61 @@ import { useState } from "react"
 
 export default function Header({ selectedOption, setSelectedOption }) {
     const [isChecked, setIsChecked] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const checkHandler = () => {
         setIsChecked(!isChecked)
     }
 
-    const handleChange = (e) => {
-        setSelectedOption(e.target.value)
+    const showSensors = () => {
+        setIsOpen(!isOpen)
+    }
+
+    const handleSensorChoice = (e) => {
+        const value = e.target.value;
+
+        setSelectedOption((prev) =>
+            prev.includes(value)
+            ? prev.filter((sensor) => sensor !== value)
+            : [...prev, value]
+        );
     }
 
     return (
         <>
             <div className="w-full bg-gray-800 p-3 flex justify-between">
                 <div>
-                    <label htmlFor="sensors">Choose a sensor: </label>
-                    <select value={selectedOption}
-                            onChange={handleChange}
-                            className="bg-[#2f4f4f] p-1 rounded-sm text-xs"
-                            name="sensors"
-                            id="sensors">
-                        <option defaultValue value="">Select</option>
-                        <option value="roll">roll</option>
-                        <option value="pitch">pitch</option>
-                        <option value="yaw">yaw</option>
-                    </select>
+                    <fieldset className="flex gap-2 relative">
+                        <div className="flex gap-2">
+                            <legend>Choose sensors</legend>
+                            <button onClick={showSensors} className={isOpen ? "opacity-50" : "opacity-100"}>↓</button>
+                        </div>
+                        <div className={isOpen ? "absolute left-0 top-6 block bg-gray-800 p-4 rounded-sm" : "hidden" }>
+                            <div className="flex gap-2">
+                                <input value="roll"
+                                       type="checkbox"
+                                       checked={selectedOption.includes("roll")}
+                                       onChange={handleSensorChoice} />
+                                <label>Roll</label>
+                            </div>
+                            <div className="flex gap-2">
+                                <input value="pitch"
+                                       type="checkbox"
+                                       checked={selectedOption.includes("pitch")}
+                                       onChange={handleSensorChoice} />
+                                <label>Pitch</label>
+                            </div>
+                            <div className="flex gap-2">
+                                <input value="yaw"
+                                       type="checkbox"
+                                       checked={selectedOption.includes("yaw")}
+                                       onChange={handleSensorChoice} />
+                                <label>Yaw</label>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
+
                 <div className="flex gap-2">
                     <label htmlFor="companion-comupter">Companion computer</label>
                     <input type="checkbox"
@@ -34,11 +64,6 @@ export default function Header({ selectedOption, setSelectedOption }) {
                            checked={isChecked}
                            onChange={checkHandler}/>
                 </div>
-            </div>
-            <div>
-                {selectedOption === "roll" && <div>Roll has been selected</div>}
-                {selectedOption === "pitch" && <div>Pitch has been selected</div>}
-                {selectedOption === "yaw" && <div>Yaw has been selected</div>}
             </div>
         </>
     )

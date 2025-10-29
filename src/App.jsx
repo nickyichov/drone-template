@@ -33,9 +33,9 @@ export default function App() {
         <>
             <Header selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
             <div className="flex gap-2 w-full">
-                { selectedOption === "roll" && <div className={"border-1 p-2 w-28"}>Roll: {roll}</div>}
-                { selectedOption === "pitch" && <div className={"border-1 p-2 w-28"}>Pitch: {pitch}</div> }
-                { selectedOption === "yaw" && <div className={"border-1 p-2 w-28"}>Yaw: {yaw}</div> }
+                { selectedOption.includes("roll") && <div className={"border-1 p-2 w-28"}>Roll: {roll}</div>}
+                { selectedOption.includes("pitch") && <div className={"border-1 p-2 w-28"}>Pitch: {pitch}</div> }
+                { selectedOption.includes("yaw") && <div className={"border-1 p-2 w-28"}>Yaw: {yaw}</div> }
             </div>
         </>
     )
