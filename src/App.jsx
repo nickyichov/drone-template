@@ -37,6 +37,21 @@ export default function App() {
                 { selectedOption.includes("pitch") && <div className={"border-1 p-2 w-full text-center"}>Pitch: {pitch}</div> }
                 { selectedOption.includes("yaw") && <div className={"border-1 p-2 w-full text-center"}>Yaw: {yaw}</div> }
             </div>
+            <div className="flex gap-2 w-full p-2">
+                { selectedOption.includes("attitude") &&
+                    <div className="border-1 p-2 w-28 text-left">
+                        <div className="flex justify-between">
+                            Roll: <p>{roll}</p>
+                        </div>
+                        <div className="flex justify-between">
+                            Pitch: <p>{pitch}</p>
+                        </div>
+                        <div className="flex justify-between">
+                            Yaw: <p>{yaw}</p>
+                        </div>
+                    </div>
+                }
+            </div>
         </>
     )
 }

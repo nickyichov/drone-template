@@ -53,6 +53,13 @@ export default function Header({ selectedOption, setSelectedOption }) {
                                        onChange={handleSensorChoice} />
                                 <label>Yaw</label>
                             </div>
+                            <div className="flex gap-2">
+                                <input value="attitude"
+                                       type="checkbox"
+                                       checked={selectedOption.includes("attitude")}
+                                       onChange={handleSensorChoice} />
+                                <label>Yaw</label>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
