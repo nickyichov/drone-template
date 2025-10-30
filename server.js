@@ -48,5 +48,13 @@ reader.on('data', packet => {
                 client.send(JSON.stringify({ type: 'Attitude-yaw', value: yaw }));
             })
         }
+
+        if (name === 'HighresImu') {
+            const temperature = data.temperature;
+
+            wss.clients.forEach((client) => {
+                client.send(JSON.stringify({ type: 'Imu-temperature', value: temperature }));
+            })
+        }
     }
 })
