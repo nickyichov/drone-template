@@ -1,8 +1,20 @@
-import { useState } from "react"
+import {useEffect, useRef, useState} from "react"
 
 export default function Header({ selectedOption, setSelectedOption }) {
     const [isChecked, setIsChecked] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const wrapperRef = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    })
 
     const checkHandler = () => {
         setIsChecked(!isChecked)
@@ -27,7 +39,7 @@ export default function Header({ selectedOption, setSelectedOption }) {
             <div className="w-full bg-gray-800 p-3 flex justify-between">
                 <div>
                     <fieldset className="flex gap-2 relative">
-                        <div className="flex gap-2 cursor-pointer" onClick={showSensors} >
+                        <div ref={wrapperRef} className="flex gap-2 cursor-pointer" onClick={showSensors} >
                             <legend>Choose sensors</legend>
                             <OpenButton buttonLabel={isOpen ? "↑" : "↓"} isOpen={isOpen} />
                         </div>
