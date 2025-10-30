@@ -44,7 +44,7 @@ export default function Header({ selectedOption, setSelectedOption }) {
                             <legend>Choose sensors</legend>
                             <OpenButton buttonLabel={isOpen ? "↑" : "↓"} isOpen={isOpen} />
                         </div>
-                        <div className={isOpen ? "absolute left-0 top-6 block bg-gray-800 p-4 rounded-sm" : "hidden" }>
+                        <div className={isOpen ? "absolute z-10 left-0 top-6 block bg-gray-800 p-4 rounded-sm" : "hidden" }>
                             <div className="flex gap-2">
                                 <input value="roll"
                                        type="checkbox"
