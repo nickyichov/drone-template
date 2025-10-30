@@ -27,9 +27,9 @@ export default function Header({ selectedOption, setSelectedOption }) {
             <div className="w-full bg-gray-800 p-3 flex justify-between">
                 <div>
                     <fieldset className="flex gap-2 relative">
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 cursor-pointer" onClick={showSensors} >
                             <legend>Choose sensors</legend>
-                            <button onClick={showSensors} className={isOpen ? "opacity-50" : "opacity-100"}>↓</button>
+                            <OpenButton buttonLabel={isOpen ? "↑" : "↓"} isOpen={isOpen} />
                         </div>
                         <div className={isOpen ? "absolute left-0 top-6 block bg-gray-800 p-4 rounded-sm" : "hidden" }>
                             <div className="flex gap-2">
@@ -58,7 +58,7 @@ export default function Header({ selectedOption, setSelectedOption }) {
                                        type="checkbox"
                                        checked={selectedOption.includes("attitude")}
                                        onChange={handleSensorChoice} />
-                                <label>Yaw</label>
+                                <label>Attitude</label>
                             </div>
                         </div>
                     </fieldset>
@@ -73,5 +73,13 @@ export default function Header({ selectedOption, setSelectedOption }) {
                 </div>
             </div>
         </>
+    )
+}
+
+function OpenButton({ buttonLabel, isOpen }) {
+    return (
+        <button className={isOpen ? "opacity-50 cursor-pointer" : "opacity-100 cursor-pointer"}>
+            {buttonLabel}
+        </button>
     )
 }
