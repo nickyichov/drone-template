@@ -7,6 +7,7 @@ export default function Header({ selectedOption, setSelectedOption }) {
 
     useEffect(() => {
         function handleClickOutside(event) {
+            console.log(wrapperRef.current.contains(event.target));
             if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
                 setIsOpen(false);
             }
@@ -38,8 +39,8 @@ export default function Header({ selectedOption, setSelectedOption }) {
         <>
             <div className="w-full bg-gray-800 p-3 flex justify-between">
                 <div>
-                    <fieldset className="flex gap-2 relative">
-                        <div ref={wrapperRef} className="flex gap-2 cursor-pointer" onClick={showSensors} >
+                    <fieldset className="flex gap-2 relative" ref={wrapperRef}>
+                        <div className="flex gap-2 cursor-pointer" onClick={showSensors} >
                             <legend>Choose sensors</legend>
                             <OpenButton buttonLabel={isOpen ? "↑" : "↓"} isOpen={isOpen} />
                         </div>
