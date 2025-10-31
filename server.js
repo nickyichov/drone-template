@@ -31,6 +31,15 @@ const server = app.listen(3000, () => {
 
 const wss = new WebSocketServer({ server });
 
+let sensorNameMessage = "";
+
+wss.on("connection", (ws) => {
+    ws.on("message", (data) => {
+        const message = JSON.parse(data);
+        sensorNameMessage = message.toString();
+    });
+});
+
 reader.on('data', packet => {
     const clazz = REGISTRY[packet.header.msgid];
     if (clazz) {
@@ -61,10 +70,8 @@ reader.on('data', packet => {
             })
         }
 
-        wss.on('message', msg => {
-            const data = JSON.parse(msg);
-
-            console.log('received data is ', data);
-        })
+        if (sensorNameMessage === "HighresImu") {
+            console.log('Received sensor name is:', name, "with data:", data );
+        }
     }
 })

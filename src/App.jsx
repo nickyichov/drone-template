@@ -41,9 +41,11 @@ export default function App() {
                 console.error(e);
             }
         }
-
-
     })
+
+    const sendCommand = (message) => {
+        ws.current.send(JSON.stringify(message));
+    };
 
     return (
         <>
@@ -54,7 +56,7 @@ export default function App() {
                     <ul className="h-48 overflow-scroll">
                         { sensorNames.map((sensorName, index) => (
                             <li className="hover:opacity-50 cursor-pointer"
-
+                                onClick={() => sendCommand(sensorName)}
                                 key={index}>
                                 {sensorName}
                             </li>
@@ -81,7 +83,6 @@ export default function App() {
                         </div>
                     }
                 </div>
-
             </div>
         </>
     )
