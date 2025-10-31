@@ -7,7 +7,6 @@ export default function Header({ selectedOption, setSelectedOption }) {
 
     useEffect(() => {
         function handleClickOutside(event) {
-            console.log(wrapperRef.current.contains(event.target));
             if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
                 setIsOpen(false);
             }

@@ -37,6 +37,10 @@ reader.on('data', packet => {
         const data = packet.protocol.data(packet.payload, clazz);
         const name = data.constructor.name;
 
+        wss.clients.forEach(client => {
+            client.send(JSON.stringify({name}))
+        })
+
         if (name === 'Attitude') {
             const roll = Math.round(data.roll * 100)/100;
             const pitch = Math.round(data.pitch * 100)/100;
@@ -56,5 +60,11 @@ reader.on('data', packet => {
                 client.send(JSON.stringify({ type: 'Imu-temperature', value: temperature }));
             })
         }
+
+        wss.on('message', msg => {
+            const data = JSON.parse(msg);
+
+            console.log('received data is ', data);
+        })
     }
 })
