@@ -5,6 +5,8 @@ import Sensors from "./Sensors.jsx"
 export default function App() {
     const ws = useRef(null)
     const [selectedSensor, setSelectedSensor] = useState(null);
+    const [selectedType, setSelectedType] = useState(null);
+    const selectedTypeRef = useRef(selectedType);
 
     const [roll, setRoll] = useState(0);
     const [pitch, setPitch] = useState(0);
@@ -13,7 +15,7 @@ export default function App() {
 
     const [sensorNames, setSensorNames] = useState([]);
     const [selectedSensorTypes, setSelectedSensorTypes] = useState([]);
-    const [selectedSensorValue, setSelectedSensorValue] = useState([]);
+    const [selectedSensorValue, setSelectedSensorValue] = useState(null);
 
     const [selectedOption, setSelectedOption] = useState("");
 
@@ -34,6 +36,10 @@ export default function App() {
                         if (prevType.includes(data.type)) return prevType;
                         return [...prevType, data.type];
                     })
+
+                    if (data.type === selectedType) {
+                        setSelectedSensorValue(data.value)
+                    }
                 }
 
                 if (data.type === "Attitude-roll") {
@@ -58,9 +64,17 @@ export default function App() {
         setSelectedSensorTypes([]);
     },[selectedSensor]);
 
+    useEffect(() => {
+        selectedTypeRef.current = selectedType;
+    },[selectedType]);
+
     const sendCommand = (message) => {
         setSelectedSensor(message);
         ws.current.send(JSON.stringify(message));
+    };
+
+    const selectTypeFromSensor = (typeFromSensor) => {
+        setSelectedType(typeFromSensor);
     };
 
     return (
@@ -83,11 +97,14 @@ export default function App() {
                     <div className="w-48 border flex items-center p-2 m-2">
                         <ul className="h-48 w-full overflow-scroll">
                             { selectedSensorTypes.map((sensorType, index) => (
-                                <li key={index}>
+                                <li key={index} onClick={() => selectTypeFromSensor(sensorType)}>
                                     {sensorType}
                                 </li>
                             ))}
                         </ul>
+                    </div>
+                    <div>
+                        {selectedSensorValue}
                     </div>
                 </div>
                 <div className="flex gap-2 w-full p-2">
