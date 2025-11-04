@@ -4,12 +4,13 @@ import Sensors from "./Sensors.jsx"
 
 export default function App() {
     const ws = useRef(null)
-    let selectedSensor = useRef(null)
+    const [selectedSensor, setSelectedSensor] = useState(null);
 
     const [roll, setRoll] = useState(0);
     const [pitch, setPitch] = useState(0);
     const [yaw, setYaw] = useState(0);
     const [temperature, setTemperature] = useState(0);
+
     const [sensorNames, setSensorNames] = useState([]);
     const [selectedSensorTypes, setSelectedSensorTypes] = useState([]);
     const [selectedSensorValue, setSelectedSensorValue] = useState([]);
@@ -28,7 +29,7 @@ export default function App() {
                     return [...prevNames, data.name];
                 });
 
-                if (data.name === selectedSensor.current) {
+                if (data.name === selectedSensor) {
                     setSelectedSensorTypes(prevType => {
                         if (prevType.includes(data.type)) return prevType;
                         return [...prevType, data.type];
@@ -51,10 +52,14 @@ export default function App() {
                 console.error(e);
             }
         }
-    })
+    },);
+
+    useEffect(() => {
+        setSelectedSensorTypes([]);
+    },[selectedSensor]);
 
     const sendCommand = (message) => {
-        selectedSensor.current = message;
+        setSelectedSensor(message);
         ws.current.send(JSON.stringify(message));
     };
 

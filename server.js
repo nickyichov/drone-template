@@ -7,7 +7,7 @@ import { WebSocketServer } from "ws";
 
 const port = new SerialPort({
     path: '/dev/tty.usbmodem01',
-    baudRate: 57600
+    baudRate: 921600
 });
 
 const reader = port
@@ -72,8 +72,6 @@ reader.on('data', packet => {
 
         if (sensorNameMessage === name) {
             for (let property in data) {
-                console.log(property, 'has value of', data[property]);
-
                 wss.clients.forEach((client) => {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(
