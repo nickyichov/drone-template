@@ -70,8 +70,20 @@ reader.on('data', packet => {
             })
         }
 
-        if (sensorNameMessage === "HighresImu") {
-            console.log('Received sensor name is:', name, "with data:", data );
+        if (sensorNameMessage === name) {
+            for (let property in data) {
+                console.log(property, 'has value of', data[property]);
+
+                wss.clients.forEach((client) => {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(
+                            JSON.stringify(
+                                {name: sensorNameMessage,  type: property, value: data[property]},
+                                (_, value) => (typeof value === 'bigint' ? value.toString() : value),
+                            ));
+                    }
+                })
+            }
         }
     }
 })

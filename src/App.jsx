@@ -4,12 +4,15 @@ import Sensors from "./Sensors.jsx"
 
 export default function App() {
     const ws = useRef(null)
+    let selectedSensor = useRef(null)
 
     const [roll, setRoll] = useState(0);
     const [pitch, setPitch] = useState(0);
     const [yaw, setYaw] = useState(0);
     const [temperature, setTemperature] = useState(0);
     const [sensorNames, setSensorNames] = useState([]);
+    const [selectedSensorTypes, setSelectedSensorTypes] = useState([]);
+    const [selectedSensorValue, setSelectedSensorValue] = useState([]);
 
     const [selectedOption, setSelectedOption] = useState("");
 
@@ -24,6 +27,13 @@ export default function App() {
                     if (prevNames.includes(data.name)) return prevNames;
                     return [...prevNames, data.name];
                 });
+
+                if (data.name === selectedSensor.current) {
+                    setSelectedSensorTypes(prevType => {
+                        if (prevType.includes(data.type)) return prevType;
+                        return [...prevType, data.type];
+                    })
+                }
 
                 if (data.type === "Attitude-roll") {
                     setRoll(data.value);
@@ -44,6 +54,7 @@ export default function App() {
     })
 
     const sendCommand = (message) => {
+        selectedSensor.current = message;
         ws.current.send(JSON.stringify(message));
     };
 
@@ -52,16 +63,27 @@ export default function App() {
             <Header selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
             <div className="flex flex-col items-start">
                 <Sensors temperature={temperature} />
-                <div className="w-48 border flex items-center justify-center m-2">
-                    <ul className="h-48 overflow-scroll">
-                        { sensorNames.map((sensorName, index) => (
-                            <li className="hover:opacity-50 cursor-pointer"
-                                onClick={() => sendCommand(sensorName)}
-                                key={index}>
-                                {sensorName}
-                            </li>
-                        ))}
-                    </ul>
+                <div className="flex gap-2 w-full">
+                    <div className="w-48 border flex items-center justify-center m-2">
+                        <ul className="h-48 overflow-scroll">
+                            { sensorNames.map((sensorName, index) => (
+                                <li className="hover:opacity-50 cursor-pointer"
+                                    onClick={() => sendCommand(sensorName)}
+                                    key={index}>
+                                    {sensorName}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="w-48 border flex items-center p-2 m-2">
+                        <ul className="h-48 w-full overflow-scroll">
+                            { selectedSensorTypes.map((sensorType, index) => (
+                                <li key={index}>
+                                    {sensorType}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
                 <div className="flex gap-2 w-full p-2">
                     { selectedOption.includes("roll") && <div className={"border-1 p-2 w-full text-center"}>Roll: {roll}</div>}
