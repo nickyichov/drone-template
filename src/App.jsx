@@ -4,6 +4,7 @@ import Sensors from "./Sensors.jsx"
 
 export default function App() {
     const ws = useRef(null)
+
     const [selectedSensor, setSelectedSensor] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const selectedTypeRef = useRef(selectedType);
@@ -18,6 +19,8 @@ export default function App() {
     const [selectedSensorValue, setSelectedSensorValue] = useState(null);
 
     const [selectedOption, setSelectedOption] = useState("");
+
+    const [startDataFlow, setStartDataFlow] = useState(false);
 
     useEffect(() => {
         ws.current = new WebSocket('ws://127.0.0.1:3000');
@@ -68,26 +71,37 @@ export default function App() {
         selectedTypeRef.current = selectedType;
     },[selectedType]);
 
-    const sendCommand = (message) => {
+    const sendSensorName = (message) => {
         setSelectedSensor(message);
-        ws.current.send(JSON.stringify(message));
+        ws.current.send(JSON.stringify({sensor: message}));
     };
 
     const selectTypeFromSensor = (typeFromSensor) => {
         setSelectedType(typeFromSensor);
     };
 
+    const toggleDataFlow = () => {
+        setStartDataFlow(!startDataFlow);
+        ws.current.send(JSON.stringify({ flowToggle: startDataFlow }));
+    }
+
+
+
     return (
         <>
             <Header selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
             <div className="flex flex-col items-start">
+                <div className="m-2">
+                    <button className="cursor-pointer" onClick={toggleDataFlow}>Refresh</button>
+                    {startDataFlow}
+                </div>
                 <Sensors temperature={temperature} />
                 <div className="flex gap-2 w-full">
                     <div className="w-48 border flex items-center justify-center m-2">
                         <ul className="h-48 overflow-scroll">
                             { sensorNames.map((sensorName, index) => (
                                 <li className="hover:opacity-50 cursor-pointer"
-                                    onClick={() => sendCommand(sensorName)}
+                                    onClick={() => sendSensorName(sensorName)}
                                     key={index}>
                                     {sensorName}
                                 </li>
