@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import Header from "./Header.jsx"
+import Sidebar from "./Sidebar.jsx"
 import Sensors from "./Sensors.jsx"
 
 export default function App() {
@@ -20,7 +21,7 @@ export default function App() {
 
     const [selectedOption, setSelectedOption] = useState("");
 
-    const [startDataFlow, setStartDataFlow] = useState(false);
+    const [showSensors, setShowSensors] = useState(false);
 
     useEffect(() => {
         ws.current = new WebSocket('ws://127.0.0.1:3000');
@@ -42,6 +43,7 @@ export default function App() {
 
                     if (data.type === selectedType) {
                         setSelectedSensorValue(data.value)
+                        console.log(data.value);
                     }
                 }
 
@@ -61,7 +63,7 @@ export default function App() {
                 console.error(e);
             }
         }
-    },);
+    });
 
     useEffect(() => {
         setSelectedSensorTypes([]);
@@ -80,25 +82,16 @@ export default function App() {
         setSelectedType(typeFromSensor);
     };
 
-    const toggleDataFlow = () => {
-        setStartDataFlow(!startDataFlow);
-        ws.current.send(JSON.stringify({ flowToggle: startDataFlow }));
-    }
-
-
-
     return (
         <>
-            <Header selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-            <div className="flex flex-col items-start">
-                <div className="m-2">
-                    <button className="cursor-pointer" onClick={toggleDataFlow}>Refresh</button>
-                    {startDataFlow}
-                </div>
-                <Sensors temperature={temperature} />
-                <div className="flex gap-2 w-full">
-                    <div className="w-48 border flex items-center justify-center m-2">
-                        <ul className="h-48 overflow-scroll">
+            <div className="flex">
+                <div>
+                    <div className="h-full w-48 border border-black">
+                        <div className="h-10 bg-gray-800 text-white flex justify-center items-center cursor-pointer over"
+                             onClick={() => setShowSensors(!showSensors)}>
+                            <span>Sensors ↓</span>
+                        </div>
+                        <ul className="pl-2">
                             { sensorNames.map((sensorName, index) => (
                                 <li className="hover:opacity-50 cursor-pointer"
                                     onClick={() => sendSensorName(sensorName)}
@@ -107,9 +100,7 @@ export default function App() {
                                 </li>
                             ))}
                         </ul>
-                    </div>
-                    <div className="w-48 border flex items-center p-2 m-2">
-                        <ul className="h-48 w-full overflow-scroll">
+                        <ul className="pl-6">
                             { selectedSensorTypes.map((sensorType, index) => (
                                 <li key={index} onClick={() => selectTypeFromSensor(sensorType)}>
                                     {sensorType}
@@ -117,29 +108,32 @@ export default function App() {
                             ))}
                         </ul>
                     </div>
-                    <div>
-                        {selectedSensorValue}
+                </div>
+                <div className="flex flex-col items-start border border-black">
+                    <Sensors temperature={temperature} />
+                    <div className="w-96 h-64 border flex items-center p-2 m-2">
+                        { selectedSensorValue }
                     </div>
-                </div>
-                <div className="flex gap-2 w-full p-2">
-                    { selectedOption.includes("roll") && <div className={"border-1 p-2 w-full text-center"}>Roll: {roll}</div>}
-                    { selectedOption.includes("pitch") && <div className={"border-1 p-2 w-full text-center"}>Pitch: {pitch}</div> }
-                    { selectedOption.includes("yaw") && <div className={"border-1 p-2 w-full text-center"}>Yaw: {yaw}</div> }
-                </div>
-                <div className="flex gap-2 w-full p-2">
-                    { selectedOption.includes("attitude") &&
-                        <div className="border-1 p-2 w-28 text-left">
-                            <div className="flex justify-between">
-                                Roll: <p>{roll}</p>
+                    <div className="flex gap-2 w-full p-2">
+                        { selectedOption.includes("roll") && <div className={"border-1 p-2 w-full text-center"}>Roll: {roll}</div>}
+                        { selectedOption.includes("pitch") && <div className={"border-1 p-2 w-full text-center"}>Pitch: {pitch}</div> }
+                        { selectedOption.includes("yaw") && <div className={"border-1 p-2 w-full text-center"}>Yaw: {yaw}</div> }
+                    </div>
+                    <div className="flex gap-2 w-full p-2">
+                        { selectedOption.includes("attitude") &&
+                            <div className="border-1 p-2 w-28 text-left">
+                                <div className="flex justify-between">
+                                    Roll: <p>{roll}</p>
+                                </div>
+                                <div className="flex justify-between">
+                                    Pitch: <p>{pitch}</p>
+                                </div>
+                                <div className="flex justify-between">
+                                    Yaw: <p>{yaw}</p>
+                                </div>
                             </div>
-                            <div className="flex justify-between">
-                                Pitch: <p>{pitch}</p>
-                            </div>
-                            <div className="flex justify-between">
-                                Yaw: <p>{yaw}</p>
-                            </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
             </div>
         </>

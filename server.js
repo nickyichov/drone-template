@@ -7,7 +7,7 @@ import { WebSocketServer } from "ws";
 
 const port = new SerialPort({
     path: '/dev/tty.usbmodem01',
-    baudRate: 921600
+    baudRate: 9600
 });
 
 const reader = port
@@ -32,20 +32,11 @@ const server = app.listen(3000, () => {
 const wss = new WebSocketServer({ server });
 
 let sensorNameMessage = "";
-let sendDataFlow = false;
 
 wss.on("connection", (ws) => {
     ws.on("message", (data) => {
         const message = JSON.parse(data);
-
-        if (message.sensor !== undefined) {
-            sensorNameMessage = message.sensor;
-        }
-
-        if (message.flowToggle !== undefined) {
-            sendDataFlow = message.flowToggle;
-        }
-        console.log(message);
+        sensorNameMessage = message.sensor;
     });
 });
 
@@ -79,21 +70,18 @@ reader.on('data', packet => {
             })
         }
 
-        if (sendDataFlow) {
-            console.log('if dataflow true',sensorNameMessage);
-            console.log('data flow itself', sendDataFlow);
-            if (sensorNameMessage === name) {
-                for (let property in data) {
-                    wss.clients.forEach((client) => {
-                        if (client.readyState === WebSocket.OPEN) {
-                            client.send(
-                                JSON.stringify(
-                                    {name: sensorNameMessage,  type: property, value: data[property]},
-                                    (_, value) => (typeof value === 'bigint' ? value.toString() : value),
-                                ));
-                        }
-                    })
-                }
+        if (sensorNameMessage === name) {
+            console.log("sensorNameMessage", sensorNameMessage);
+            for (let property in data) {
+                wss.clients.forEach((client) => {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(
+                            JSON.stringify(
+                                {name: sensorNameMessage, type: property, value: data[property]},
+                                (_, value) => (typeof value === 'bigint' ? value.toString() : value),
+                            ));
+                    }
+                })
             }
         }
     }
