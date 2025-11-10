@@ -10,13 +10,7 @@ export default function Charts({ groundspeed }) {
         const ctx = canvasRef.current.getContext('2d')
 
         const initialData = [
-            { year: 2010, count: 1 },
-            { year: 2011, count: 1 },
-            { year: 2012, count: 2 },
-            { year: 2013, count: 1 },
-            { year: 2014, count: 1 },
-            { year: 2015, count: 1 },
-            { year: 2016, count: 2 },
+            { year: new Date().toLocaleTimeString(), count: 0 },
         ]
 
         chartRef.current = new Chart(ctx, {
@@ -25,7 +19,7 @@ export default function Charts({ groundspeed }) {
                 labels: initialData.map(row => row.year),
                 datasets: [{
                     label: 'Wind Speed',
-                    data: [0.1, 0, 0.2, 0.5, 0.8, 0.2, 0.3],
+                    data: [groundspeed],
                     fill: false,
                     borderColor: 'rgb(75, 192, 192)',
                     tension: 0.1

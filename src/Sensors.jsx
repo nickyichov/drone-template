@@ -1,12 +1,16 @@
 import {useState} from "react";
 import Chart from "./Chart.jsx";
 
-export default function Sensors({ temperature, airspeed, groundspeed, title, roll }) {
+export default function Sensors({ temperature, airspeed, groundspeed, title, showWindSped }) {
    return (
        <>
            <div className="flex w-full justify-between">
                <div className="flex">
-                   <Tank airspeed={airspeed} groundspeed={roll} title={title} />
+                   <div className="block w-96 h-64 border m-2 relative">
+                       <div className={showWindSped ? "block" : "hidden"}>
+                           <Tank airspeed={airspeed} groundspeed={groundspeed} title={title} />
+                       </div>
+                   </div>
                    <Camera/>
                </div>
                <Temperature temperature={temperature} />
@@ -70,11 +74,9 @@ function Temperature({ temperature }) {
 function Tank({ airspeed, groundspeed, title }) {
     return (
         <>
-            <div className="w-96 h-64 border m-2 relative">
-                <div className="bg-gray-800 p-2">Title: {title}</div>
-                <div className="flex flex-col items-center justify-center w-full h-full">
-                    <Chart groundspeed={groundspeed}/>
-                </div>
+            <div className="bg-gray-800 p-2">Title: {title}</div>
+            <div className="flex flex-col items-center justify-center w-full h-full">
+                <Chart groundspeed={groundspeed}/>
             </div>
         </>
     )

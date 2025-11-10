@@ -18,6 +18,8 @@ export default function App() {
     const [airspeed, setAirspeed] = useState(0);
     const [groundspeed, setGroundspeed] = useState(0);
 
+    const [showWindSpeed, setShowWindSpeed] = useState(false);
+
     const [selectedOption, setSelectedOption] = useState("");
 
     const [showSensors, setShowSensors] = useState(false);
@@ -81,13 +83,16 @@ export default function App() {
                              onClick={() => setShowSensors(!showSensors)}>
                             <span>Sensors</span>
                         </div>
-                        <div className="border border-black h-10 flex justify-center items-center cursor-pointer hover:bg-gray-800 font-semibold">
-                            Detect wind speed
+                        <div className={showWindSpeed ? "bg-gray-600" : "bg-transparent"}>
+                            <div className="border border-black h-10 flex justify-center items-center cursor-pointer hover:bg-gray-800 font-semibold"
+                                 onClick={() => {setShowWindSpeed(!showWindSpeed)}}>
+                                Detect wind speed
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col items-start border border-black">
-                    <Sensors temperature={temperature} airspeed={airspeed} groundspeed={groundspeed} title={'Detect Wind Speed'} roll={roll} />
+                    <Sensors temperature={temperature} airspeed={airspeed} groundspeed={groundspeed} title={'Detect Wind Speed'} showWindSped={showWindSpeed} />
                     <div className="flex gap-2 w-full p-2">
                         { selectedOption.includes("roll") && <div className={"border-1 p-2 w-full text-center"}>Roll: {roll}</div>}
                         { selectedOption.includes("pitch") && <div className={"border-1 p-2 w-full text-center"}>Pitch: {pitch}</div> }
