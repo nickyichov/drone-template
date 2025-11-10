@@ -46,10 +46,6 @@ reader.on('data', packet => {
         const data = packet.protocol.data(packet.payload, clazz);
         const name = data.constructor.name;
 
-        wss.clients.forEach(client => {
-            client.send(JSON.stringify({name}))
-        })
-
         if (name === 'Attitude') {
             const roll = Math.round(data.roll * 100)/100;
             const pitch = Math.round(data.pitch * 100)/100;
@@ -68,21 +64,6 @@ reader.on('data', packet => {
             wss.clients.forEach((client) => {
                 client.send(JSON.stringify({ type: 'Imu-temperature', value: temperature }));
             })
-        }
-
-        if (sensorNameMessage === name) {
-            console.log("sensorNameMessage", sensorNameMessage);
-            for (let property in data) {
-                wss.clients.forEach((client) => {
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.send(
-                            JSON.stringify(
-                                {name: sensorNameMessage, type: property, value: data[property]},
-                                (_, value) => (typeof value === 'bigint' ? value.toString() : value),
-                            ));
-                    }
-                })
-            }
         }
     }
 })

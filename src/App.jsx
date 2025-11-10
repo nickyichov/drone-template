@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from "react";
 import Header from "./Header.jsx"
 import Sidebar from "./Sidebar.jsx"
 import Sensors from "./Sensors.jsx"
+import Chart from "./Chart.jsx";
 
 export default function App() {
     const ws = useRef(null)
@@ -22,6 +23,8 @@ export default function App() {
     const [selectedOption, setSelectedOption] = useState("");
 
     const [showSensors, setShowSensors] = useState(false);
+
+    const [rollArray, setRollArray] = useState([]);
 
     useEffect(() => {
         ws.current = new WebSocket('ws://127.0.0.1:3000');
@@ -49,6 +52,9 @@ export default function App() {
 
                 if (data.type === "Attitude-roll") {
                     setRoll(data.value);
+                    let arr = [...rollArray];
+                    arr.push(data.value);
+                    setRollArray(arr);
                 }
                 if (data.type === "Attitude-pitch") {
                     setPitch(data.value);
@@ -84,6 +90,7 @@ export default function App() {
 
     return (
         <>
+            <Header selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
             <div className="flex">
                 <div>
                     <div className="h-full w-48 border border-black">
@@ -91,22 +98,6 @@ export default function App() {
                              onClick={() => setShowSensors(!showSensors)}>
                             <span>Sensors ↓</span>
                         </div>
-                        <ul className="pl-2">
-                            { sensorNames.map((sensorName, index) => (
-                                <li className="hover:opacity-50 cursor-pointer"
-                                    onClick={() => sendSensorName(sensorName)}
-                                    key={index}>
-                                    {sensorName}
-                                </li>
-                            ))}
-                        </ul>
-                        <ul className="pl-6">
-                            { selectedSensorTypes.map((sensorType, index) => (
-                                <li key={index} onClick={() => selectTypeFromSensor(sensorType)}>
-                                    {sensorType}
-                                </li>
-                            ))}
-                        </ul>
                     </div>
                 </div>
                 <div className="flex flex-col items-start border border-black">
@@ -118,6 +109,9 @@ export default function App() {
                         { selectedOption.includes("roll") && <div className={"border-1 p-2 w-full text-center"}>Roll: {roll}</div>}
                         { selectedOption.includes("pitch") && <div className={"border-1 p-2 w-full text-center"}>Pitch: {pitch}</div> }
                         { selectedOption.includes("yaw") && <div className={"border-1 p-2 w-full text-center"}>Yaw: {yaw}</div> }
+                    </div>
+                    <div>
+                        Roll: {roll}
                     </div>
                     <div className="flex gap-2 w-full p-2">
                         { selectedOption.includes("attitude") &&
