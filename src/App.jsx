@@ -15,10 +15,8 @@ export default function App() {
     const [pitch, setPitch] = useState(0);
     const [yaw, setYaw] = useState(0);
     const [temperature, setTemperature] = useState(0);
-
-    const [sensorNames, setSensorNames] = useState([]);
-    const [selectedSensorTypes, setSelectedSensorTypes] = useState([]);
-    const [selectedSensorValue, setSelectedSensorValue] = useState(null);
+    const [airspeed, setAirspeed] = useState(0);
+    const [groundspeed, setGroundspeed] = useState(0);
 
     const [selectedOption, setSelectedOption] = useState("");
 
@@ -32,23 +30,6 @@ export default function App() {
         ws.current.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
-
-                setSensorNames(prevNames => {
-                    if (prevNames.includes(data.name)) return prevNames;
-                    return [...prevNames, data.name];
-                });
-
-                if (data.name === selectedSensor) {
-                    setSelectedSensorTypes(prevType => {
-                        if (prevType.includes(data.type)) return prevType;
-                        return [...prevType, data.type];
-                    })
-
-                    if (data.type === selectedType) {
-                        setSelectedSensorValue(data.value)
-                        console.log(data.value);
-                    }
-                }
 
                 if (data.type === "Attitude-roll") {
                     setRoll(data.value);
@@ -65,15 +46,17 @@ export default function App() {
                 if (data.type === "Imu-temperature") {
                     setTemperature(data.value);
                 }
+                if (data.type === "VfrHud-airspeed") {
+                    setAirspeed(data.value);
+                }
+                if (data.type === "VfrHud-groundspeed") {
+                    setGroundspeed(data.value);
+                }
             } catch (e) {
                 console.error(e);
             }
         }
     });
-
-    useEffect(() => {
-        setSelectedSensorTypes([]);
-    },[selectedSensor]);
 
     useEffect(() => {
         selectedTypeRef.current = selectedType;
@@ -96,22 +79,19 @@ export default function App() {
                     <div className="h-full w-48 border border-black">
                         <div className="h-10 bg-gray-800 text-white flex justify-center items-center cursor-pointer over"
                              onClick={() => setShowSensors(!showSensors)}>
-                            <span>Sensors ↓</span>
+                            <span>Sensors</span>
+                        </div>
+                        <div className="border border-black h-10 flex justify-center items-center cursor-pointer hover:bg-gray-800 font-semibold">
+                            Detect wind speed
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col items-start border border-black">
-                    <Sensors temperature={temperature} />
-                    <div className="w-96 h-64 border flex items-center p-2 m-2">
-                        { selectedSensorValue }
-                    </div>
+                    <Sensors temperature={temperature} airspeed={airspeed} groundspeed={groundspeed} title={'Detect Wind Speed'} roll={roll} />
                     <div className="flex gap-2 w-full p-2">
                         { selectedOption.includes("roll") && <div className={"border-1 p-2 w-full text-center"}>Roll: {roll}</div>}
                         { selectedOption.includes("pitch") && <div className={"border-1 p-2 w-full text-center"}>Pitch: {pitch}</div> }
                         { selectedOption.includes("yaw") && <div className={"border-1 p-2 w-full text-center"}>Yaw: {yaw}</div> }
-                    </div>
-                    <div>
-                        Roll: {roll}
                     </div>
                     <div className="flex gap-2 w-full p-2">
                         { selectedOption.includes("attitude") &&

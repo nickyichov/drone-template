@@ -65,5 +65,15 @@ reader.on('data', packet => {
                 client.send(JSON.stringify({ type: 'Imu-temperature', value: temperature }));
             })
         }
+
+        if (name === 'VfrHud') {
+            const airspeed = data.airspeed;
+            const groundspeed = data.groundspeed;
+
+            wss.clients.forEach((client) => {
+                client.send(JSON.stringify({ type: 'VfrHud-airspeed', value: airspeed }));
+                client.send(JSON.stringify({ type: 'VfrHud-groundspeed', value: groundspeed }));
+            })
+        }
     }
 })
