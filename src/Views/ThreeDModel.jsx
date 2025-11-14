@@ -8,6 +8,8 @@ export default function ThreeDModel({ roll, pitch, yaw }) {
     const rendererRef = useRef(null);
     const frameRef = useRef(null);
 
+    const yawDeg = -yaw * (180 / Math.PI);
+
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
@@ -87,5 +89,15 @@ export default function ThreeDModel({ roll, pitch, yaw }) {
         console.log(model.rotation.z);
     }, [roll, pitch, yaw]);
 
-    return <div ref={containerRef} className="w-96 h-64 m-2" />;
+    return (
+        <>
+            <div ref={containerRef} className="w-96 h-64 relative flex justify-center">
+                <div className="absolute top-0">
+                    <img src="../src/images/heading_yaw.png" alt="heading indicator" className="w-64" style={{
+                        transform: `rotate(${yawDeg}deg)`
+                    }}/>
+                </div>
+            </div>
+        </>
+    );
 }
