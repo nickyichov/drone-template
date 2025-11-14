@@ -1,10 +1,13 @@
-import {useState} from "react";
+import {useState, useRef, useEffect} from "react";
+import * as THREE from 'three';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import Chart from "./Chart.jsx";
+import ThreeDModel from "./Views/ThreeDModel.jsx";
 
-export default function Sensors({ temperature, airspeed, groundspeed, title, showWindSped }) {
+export default function Sensors({ temperature, airspeed, groundspeed, title, showWindSped, roll, pitch, yaw }) {
    return (
        <>
-           <div className="flex w-full justify-between">
+           <div className="flex flex-col w-full justify-between">
                <div className="flex">
                    <div className="block w-96 h-64 border m-2 relative">
                        <div className={showWindSped ? "block" : "hidden"}>
@@ -12,8 +15,15 @@ export default function Sensors({ temperature, airspeed, groundspeed, title, sho
                        </div>
                    </div>
                    <Camera/>
+                   <Temperature temperature={temperature} />
                </div>
-               <Temperature temperature={temperature} />
+               <div>
+                   <div className="block w-96 h-64 border m-2 relative">
+                       <div>
+                            <ThreeDModel pitch={pitch} roll={roll} yaw={yaw} />
+                       </div>
+                   </div>
+               </div>
            </div>
        </>
    )
