@@ -3,6 +3,7 @@ import Header from "./Header.jsx"
 import Sidebar from "./Sidebar.jsx"
 import Sensors from "./Sensors.jsx"
 import Chart from "./Chart.jsx";
+import ThreeDModel from "./Views/ThreeDModel.jsx";
 
 export default function App() {
     const ws = useRef(null)
@@ -92,7 +93,10 @@ export default function App() {
                     </div>
                 </div>
                 <div className="flex flex-col items-start border border-black">
-                    <Sensors temperature={temperature} airspeed={airspeed} groundspeed={groundspeed} title={'Detect Wind Speed'} showWindSped={showWindSpeed} roll={roll} pitch={pitch} yaw={yaw} />
+                    <div className="block w-96 h-64 border m-2 relative">
+                        <ThreeDModel roll={roll} pitch={pitch} yaw={yaw} />
+                    </div>
+                    <Sensors temperature={temperature} airspeed={airspeed} groundspeed={groundspeed} title={'Detect Wind Speed'} showWindSped={showWindSpeed} />
                     <div className="flex gap-2 w-full p-2">
                         { selectedOption.includes("roll") && <div className={"border-1 p-2 w-full text-center"}>Roll: {roll}</div>}
                         { selectedOption.includes("pitch") && <div className={"border-1 p-2 w-full text-center"}>Pitch: {pitch}</div> }
