@@ -6,7 +6,22 @@ import Chart from "./Chart.jsx";
 export default function Sensors({ temperature, airspeed, groundspeed, title, showWindSped }) {
    return (
        <>
+           <div className="flex w-full">
+               <div className="flex w-1/4 justify-center p-2">
+                   <ul>
+                       <li className="bg-gray-900 px-8 py-1 rounded-xl text-green-600 font-bold
+                                        hover:border-2 hover:border-orange-800 hover:text-orange-800 hover:cursor-pointer"
+                       >
+                           Roll
+                       </li>
+                   </ul>
+               </div>
+               <div className="w-full">
+                   <div className="border border-black w-full h-56">
 
+                   </div>
+               </div>
+           </div>
        </>
    )
 }
