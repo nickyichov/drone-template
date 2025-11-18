@@ -4,6 +4,7 @@ import Sidebar from "./Sidebar.jsx"
 import Sensors from "./Sensors.jsx"
 import Chart from "./Chart.jsx";
 import ThreeDModel from "./Views/ThreeDModel.jsx";
+import Camera from "./Views/Camera.jsx"
 
 export default function App() {
     const ws = useRef(null)
@@ -76,46 +77,16 @@ export default function App() {
 
     return (
         <>
-            <Header selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-            <div className="flex">
-                <div>
-                    <div className="h-full w-48 border border-black">
-                        <div className="h-10 bg-gray-800 text-white flex justify-center items-center cursor-pointer over"
-                             onClick={() => setShowSensors(!showSensors)}>
-                            <span>Sensors</span>
-                        </div>
-                        <div className={showWindSpeed ? "bg-gray-600" : "bg-transparent"}>
-                            <div className="border border-black h-10 flex justify-center items-center cursor-pointer hover:bg-gray-800 font-semibold"
-                                 onClick={() => {setShowWindSpeed(!showWindSpeed)}}>
-                                Detect wind speed
-                            </div>
-                        </div>
-                    </div>
+            <div className="flex flex-col w-full h-screen">
+                <div className="border border-black h-1/3 w-full">
+
                 </div>
-                <div className="flex flex-col items-start border border-black">
-                    <div className="block w-96 h-64 border m-2 relative">
-                        <ThreeDModel roll={roll} pitch={pitch} yaw={yaw} />
+                <div className="flex border border-black w-full h-2/3">
+                    <div className="border border-black w-1/2 h-full flex">
+                        <Camera />
                     </div>
-                    <Sensors temperature={temperature} airspeed={airspeed} groundspeed={groundspeed} title={'Detect Wind Speed'} showWindSped={showWindSpeed} />
-                    <div className="flex gap-2 w-full p-2">
-                        { selectedOption.includes("roll") && <div className={"border-1 p-2 w-full text-center"}>Roll: {roll}</div>}
-                        { selectedOption.includes("pitch") && <div className={"border-1 p-2 w-full text-center"}>Pitch: {pitch}</div> }
-                        { selectedOption.includes("yaw") && <div className={"border-1 p-2 w-full text-center"}>Yaw: {yaw}</div> }
-                    </div>
-                    <div className="flex gap-2 w-full p-2">
-                        { selectedOption.includes("attitude") &&
-                            <div className="border-1 p-2 w-28 text-left">
-                                <div className="flex justify-between">
-                                    Roll: <p>{roll}</p>
-                                </div>
-                                <div className="flex justify-between">
-                                    Pitch: <p>{pitch}</p>
-                                </div>
-                                <div className="flex justify-between">
-                                    Yaw: <p>{yaw}</p>
-                                </div>
-                            </div>
-                        }
+                    <div className="border border-black w-1/2 h-full">
+                        <Sensors temperature={temperature} groundspeed={groundspeed} showWindSpeed={showWindSpeed} />
                     </div>
                 </div>
             </div>
