@@ -5,6 +5,7 @@ import Sensors from "./Sensors.jsx"
 import Chart from "./Chart.jsx";
 import ThreeDModel from "./Views/ThreeDModel.jsx";
 import Camera from "./Views/Camera.jsx"
+import FlightInstruments from "./Views/FlightInstruments.jsx";
 
 export default function App() {
     const ws = useRef(null)
@@ -78,8 +79,8 @@ export default function App() {
     return (
         <>
             <div className="flex flex-col w-full h-screen">
-                <div className="border border-black h-1/3 w-full">
-
+                <div className="border border-black h-1/3 w-full flex justify-center bg-[#444547]">
+                    <FlightInstruments roll={roll} pitch={pitch} yaw={yaw} />
                 </div>
                 <div className="flex border border-black w-full h-2/3">
                     <div className="border border-black w-1/2 h-full flex">
