@@ -57,7 +57,6 @@ export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groun
 }
 
 function ConstantSensors({ temperature }) {
-
     return (
         <>
             <div className="flex gap-2 p-2">

@@ -75,5 +75,21 @@ reader.on('data', packet => {
                 client.send(JSON.stringify({ type: 'VfrHud-groundspeed', value: groundspeed }));
             })
         }
+
+        if (name === 'Altitude') {
+            const altitudeAmsl = Math.round(data.altitudeAmsl * 100)/100;
+
+            wss.clients.forEach((client) => {
+                client.send(JSON.stringify({ type: 'Altitude-amsl', value: altitudeAmsl }));
+            })
+        }
+
+        if (name === 'HighresImu') {
+            const yacc = Math.round(data.yacc * 100)/100;
+
+            wss.clients.forEach((client) => {
+                client.send(JSON.stringify({ type: 'HighresImu-yacc', value: yacc }));
+            })
+        }
     }
 })

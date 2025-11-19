@@ -20,6 +20,8 @@ export default function App() {
     const [temperature, setTemperature] = useState(0);
     const [airspeed, setAirspeed] = useState(0);
     const [groundspeed, setGroundspeed] = useState(0);
+    const [amsl, setAmsl] = useState(0);
+    const [yacc, setYacc] = useState(0);
 
     const [showWindSpeed, setShowWindSpeed] = useState(false);
 
@@ -57,6 +59,12 @@ export default function App() {
                 if (data.type === "VfrHud-groundspeed") {
                     setGroundspeed(data.value);
                 }
+                if (data.type === "Altitude-amsl") {
+                    setAmsl(data.value);
+                }
+                if (data.type === "HighresImu-yacc") {
+                    setYacc(data.value);
+                }
             } catch (e) {
                 console.error(e);
             }
@@ -80,7 +88,7 @@ export default function App() {
         <>
             <div className="flex flex-col w-full h-screen">
                 <div className="border border-black h-1/3 w-full flex justify-center bg-[#444547]">
-                    <FlightInstruments roll={roll} pitch={pitch} yaw={yaw} />
+                    <FlightInstruments roll={roll} pitch={pitch} yaw={yaw} speed={groundspeed} yacc={yacc} altitudeAmsl={amsl} />
                 </div>
                 <div className="flex border border-black w-full h-2/3">
                     <div className="border border-black w-1/2 h-full flex">
