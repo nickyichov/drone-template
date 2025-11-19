@@ -86,7 +86,7 @@ export default function App() {
                     <div className="border border-black w-1/2 h-full flex">
                         <Camera />
                     </div>
-                    <div className="border border-black w-1/2 h-full">
+                    <div className="border border-black w-1/2 h-full overflow-hidden">
                         <Sensors roll={roll} pitch={pitch} yaw={yaw} temperature={temperature} groundspeed={groundspeed} showWindSpeed={showWindSpeed} />
                     </div>
                 </div>
