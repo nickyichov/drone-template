@@ -87,7 +87,7 @@ export default function App() {
                         <Camera />
                     </div>
                     <div className="border border-black w-1/2 h-full">
-                        <Sensors temperature={temperature} groundspeed={groundspeed} showWindSpeed={showWindSpeed} />
+                        <Sensors roll={roll} pitch={pitch} yaw={yaw} temperature={temperature} groundspeed={groundspeed} showWindSpeed={showWindSpeed} />
                     </div>
                 </div>
             </div>

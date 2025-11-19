@@ -3,7 +3,7 @@ export default function FlightInstruments({ roll, pitch, yaw, yacc, speed, altit
 
     return (
         <>
-            <div className="flex">
+            <div className="flex overflow-hidden">
                 <AttitudeIndicator roll={roll} pitch={pitch} />
                 <AirspeedIndicator speed={speed} />
                 <TurnCoordinator yacc={yacc} rollDeg={rollDeg} />

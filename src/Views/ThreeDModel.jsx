@@ -14,8 +14,8 @@ export default function ThreeDModel({ roll, pitch, yaw }) {
         const container = containerRef.current;
         if (!container) return;
 
-        const width = container.clientWidth || 300;
-        const height = container.clientHeight || 200;
+        const width = 500;
+        const height = 350;
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
@@ -96,11 +96,19 @@ export default function ThreeDModel({ roll, pitch, yaw }) {
 
     return (
         <>
-            <div ref={containerRef} className="w-96 h-64 relative flex justify-center">
-                <div className="absolute top-0">
-                    <img src="../src/images/heading_yaw.png" alt="heading indicator" className="w-64" style={{
-                        transform: `rotate(${yawDeg}deg)`
-                    }}/>
+            <div ref={containerRef} className="w-full h-64 relative flex justify-center"></div>
+            <div className="flex flex-row w-full p-4 gap-2 text-sm">
+                <div className="flex w-full justify-between bg-gray-900 px-2">
+                    <p className="text-orange-400">Roll</p>
+                    <p className="">{ roll }</p>
+                </div>
+                <div className="flex w-full justify-between bg-gray-900 px-2">
+                    <p className="text-orange-400">Pitch</p>
+                    <p>{ pitch }</p>
+                </div>
+                <div className="flex w-full justify-between bg-gray-900 px-2">
+                    <p className="text-orange-400">Yaw</p>
+                    <p>{ yaw }</p>
                 </div>
             </div>
         </>
