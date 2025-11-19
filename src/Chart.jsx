@@ -39,10 +39,23 @@ export default function Charts({ groundspeed }) {
         if (!chart) return
 
         const label = new Date().toLocaleTimeString()
+
+        // Maximum number of points to show
+        const MAX_POINTS = 50
+
+        // If too many points, reset completely
+        if (chart.data.labels.length >= MAX_POINTS) {
+            chart.data.labels = []
+            chart.data.datasets.forEach(ds => ds.data = [])
+        }
+
+        // Add new data
         chart.data.labels.push(label)
         chart.data.datasets.forEach(ds => ds.data.push(groundspeed))
+
         chart.update()
     }, [groundspeed])
+
 
     return (
         <>
