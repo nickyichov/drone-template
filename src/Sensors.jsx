@@ -40,7 +40,7 @@ export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groun
                        {
                            selectInformation === "roll" &&
                            <div>
-                               <Chart />
+                               <Chart groundspeed={roll} />
                                <div>
 
                                </div>
