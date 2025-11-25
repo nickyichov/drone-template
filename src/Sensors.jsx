@@ -58,9 +58,12 @@ export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groun
 
 function ConstantSensors({ temperature }) {
     const [distance, setDistance] = useState(2);
-    const [flightTime, setFlightTime] = useState(19);
     const [battery, setBattery] = useState(25);
+    const [batteryCapacity, setBatteryCapacity] = useState(5000);
 
+    const voltage = 14.8; // V
+    const powerDraw = 150 ; // W
+    const flightTime = Number.parseFloat((batteryCapacity * voltage * 0.85) / (powerDraw * 60)).toFixed(2);
 
     return (
         <>
@@ -88,11 +91,11 @@ function ConstantSensors({ temperature }) {
                     </div>
                     <div>
                         <label>
-                            Flight time:
+                            Battery Capacity:
                             <input
                                 className="w-10 border p-1 rounded-md mx-2"
-                                value={flightTime}
-                                onChange={e => setFlightTime(e.target.value)}
+                                value={batteryCapacity}
+                                onChange={e => setBatteryCapacity(e.target.value)}
                             />
                         </label>
                     </div>
