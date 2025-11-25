@@ -57,23 +57,45 @@ export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groun
 }
 
 function ConstantSensors({ temperature }) {
+    const distance = 4; // in KM
+    const flightTime = 19; // in Min
+    const battery = 50; // in %
+
     return (
         <>
             <div className="flex gap-2 p-2">
                 <div className="flex flex-col items-center bg-gray-900 p-2 rounded-md">
                     <p className="text-yellow-600">Battery</p>
-                    <img src="src/assets/power.png" alt="Battery" />
-                    <p className="text-blue-800">50%</p>
+                    <div className="flex">
+                        {
+                            battery >= 50 && <img src="src/assets/power.png" alt="Battery"/> ||
+                            battery < 50 && battery >= 20 && <img src="src/assets/power-warning.png" alt="Battery" /> ||
+                            battery < 20 && <img src="src/assets/power-critical.png" alt="Battery" />
+                        }
+                    </div>
+                    <p className="text-blue-800">{battery}%</p>
                 </div>
                 <div className="flex flex-col items-center bg-gray-900 p-2 rounded-md">
                     <p className="text-yellow-600">Distance</p>
-                    <img src="src/assets/distance.png" alt="Distance" />
-                    <p className="text-blue-800">4KM</p>
+                    <div>
+                        {
+                            distance <= 3 && <img src="src/assets/distance.png" alt="Distance" /> ||
+                            distance > 3 && distance <= 7 && <img src="src/assets/distance-warning.png" alt="Distance" /> ||
+                            distance > 7 && <img src="src/assets/distance-critical.png" alt="Distance" />
+                        }
+                    </div>
+                    <p className="text-blue-800">{distance}KM</p>
                 </div>
                 <div className="flex flex-col items-center bg-gray-900 p-2 rounded-md">
                     <p className="text-yellow-600">Flight time</p>
-                    <img src="src/assets/flight-time.png" alt="Flight time" />
-                    <p className="text-blue-800">13Min</p>
+                    <div>
+                        {
+                            flightTime < 20 && <img src="src/assets/flight-time-critical.png" alt="Flight time" /> ||
+                            flightTime >= 20 && flightTime < 30 && <img src="src/assets/flight-time-warning.png" alt="Flight time" /> ||
+                            flightTime >= 30 && <img src="src/assets/flight-time.png" alt="Flight time" />
+                        }
+                    </div>
+                    <p className="text-blue-800">{flightTime}Min</p>
                 </div>
                 <div className="flex flex-col items-center bg-gray-900 px-2 p-2 rounded-md">
                     <div className="flex">
