@@ -62,13 +62,18 @@ function ConstantSensors({ temperature }) {
             <div className="flex gap-2 p-2">
                 <div className="flex flex-col items-center bg-gray-900 p-2 rounded-md">
                     <p className="text-yellow-600">Battery</p>
-                    <img src="src/assets/power.png" />
-                    <p className="text-blue-800">12V</p>
+                    <img src="src/assets/power.png" alt="Battery" />
+                    <p className="text-blue-800">50%</p>
                 </div>
                 <div className="flex flex-col items-center bg-gray-900 p-2 rounded-md">
                     <p className="text-yellow-600">Distance</p>
-                    <img src="src/assets/distance.png" />
+                    <img src="src/assets/distance.png" alt="Distance" />
                     <p className="text-blue-800">4KM</p>
+                </div>
+                <div className="flex flex-col items-center bg-gray-900 p-2 rounded-md">
+                    <p className="text-yellow-600">Flight time</p>
+                    <img src="src/assets/flight-time.png" alt="Flight time" />
+                    <p className="text-blue-800">13Min</p>
                 </div>
                 <div className="flex flex-col items-center bg-gray-900 px-2 p-2 rounded-md">
                     <div className="flex">
