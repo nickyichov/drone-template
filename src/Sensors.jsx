@@ -57,9 +57,10 @@ export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groun
 }
 
 function ConstantSensors({ temperature }) {
-    const distance = 4; // in KM
+    const distance = 2; // in KM
     const flightTime = 19; // in Min
-    const battery = 50; // in %
+    const battery = 25; // in %
+
 
     return (
         <>
@@ -79,9 +80,13 @@ function ConstantSensors({ temperature }) {
                     <p className="text-yellow-600">Distance</p>
                     <div>
                         {
-                            distance <= 3 && <img src="src/assets/distance.png" alt="Distance" /> ||
-                            distance > 3 && distance <= 7 && <img src="src/assets/distance-warning.png" alt="Distance" /> ||
-                            distance > 7 && <img src="src/assets/distance-critical.png" alt="Distance" />
+                            battery >= 50 && distance < 3 ? (
+                                <img src="src/assets/distance.png" alt="Distance" />
+                            ) : battery < 50 && battery >= 20 && distance >= 3 && distance < 5 ? (
+                                <img src="src/assets/distance-warning.png" alt="Distance" />
+                            ) : battery < 20 && distance > 1 || battery < 50 && battery >= 20 && distance >= 5 ?  (
+                                <img src="src/assets/distance-critical.png" alt="Distance" />
+                            ) : <img src="src/assets/distance.png" alt="Distance" />
                         }
                     </div>
                     <p className="text-blue-800">{distance}KM</p>
