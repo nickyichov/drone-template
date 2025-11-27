@@ -131,11 +131,11 @@ function ConstantSensors({ temperature }) {
                         <p className="text-yellow-600">Flight time</p>
                         <div>
                             {
-                                flightTime >= 50 && (distance > 7 && distance <= 10) ? (
+                                flightTime >= 20 && (distance > 3 && distance <= 5) ? (
                                     <img src="src/assets/flight-time.png" alt="Flight time" />
-                                ) : flightTime >= 20 && flightTime < 30 && (distance >= 3 && distance <= 7) ? (
+                                ) : flightTime >= 10 && flightTime < 20 && (distance >= 1 && distance <= 3) ? (
                                     <img src="src/assets/flight-time-warning.png" alt="Flight time" />
-                                ) : (flightTime < 20 && distance > 3) || (flightTime >= 50 && distance > 10) ? (
+                                ) : (flightTime < 10 && distance > 1) || (flightTime >= 20 && distance > 5) ? (
                                     <img src="src/assets/flight-time-critical.png" alt="Flight time" />
                                 ) : <img src="src/assets/flight-time.png" alt="Flight time" />
                             }
