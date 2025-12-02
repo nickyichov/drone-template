@@ -4,6 +4,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import Chart from "./Chart.jsx";
 import ThreeDModel from "./Views/ThreeDModel.jsx";
 import Settings from "./Views/Settings.jsx"
+import Map from "./Views/Map.jsx";
 
 export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groundspeed, title, showWindSped }) {
     const [selectInformation, setSelectInformation] = useState("aileron");
@@ -36,6 +37,12 @@ export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groun
                        >
                            Settings
                        </li>
+                       <li className="bg-gray-900 px-10 py-1 rounded-xl text-green-600 font-bold my-2 border-2 border-transparent
+                                      hover:border-orange-800 hover:text-orange-800 hover:cursor-pointer text-center"
+                           onClick={() => handleSelectInformation("map")}
+                       >
+                           Map
+                       </li>
                    </ul>
                </div>
                <div className="w-full">
@@ -56,6 +63,10 @@ export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groun
                        {
                             selectInformation === "settings" &&
                             <Settings />
+                       }
+                       {
+                           selectInformation === "map" &&
+                           <Map distance={100} />
                        }
                    </div>
                    <div className="flex h-1/2 items-start p-2">
