@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import Chart from "./Chart.jsx";
 import ThreeDModel from "./Views/ThreeDModel.jsx";
+import Settings from "./Views/Settings.jsx"
 
 export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groundspeed, title, showWindSped }) {
     const [selectInformation, setSelectInformation] = useState("aileron");
@@ -29,10 +30,16 @@ export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groun
                        >
                            Roll
                        </li>
+                       <li className="bg-gray-900 px-10 py-1 rounded-xl text-green-600 font-bold my-2 border-2 border-transparent
+                                      hover:border-orange-800 hover:text-orange-800 hover:cursor-pointer text-center"
+                           onClick={() => handleSelectInformation("settings")}
+                       >
+                           Settings
+                       </li>
                    </ul>
                </div>
                <div className="w-full">
-                   <div>
+                   <div className="h-92">
                        {
                            selectInformation === "aileron" &&
                            <ThreeDModel roll={roll} pitch={pitch} yaw={yaw} />
@@ -45,6 +52,10 @@ export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groun
 
                                </div>
                            </div>
+                       }
+                       {
+                            selectInformation === "settings" &&
+                            <Settings />
                        }
                    </div>
                    <div className="flex h-1/2 items-start p-2">
