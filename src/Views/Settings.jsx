@@ -2,7 +2,7 @@ import { useState } from "react";
 import Map from "./Map";
 
 export default function Settings() {
-    const [range, setRange] = useState(1000);
+    const [range, setRange] = useState(100);
 
     return (
         <>
