@@ -22,6 +22,8 @@ export default function App() {
     const [groundspeed, setGroundspeed] = useState(0);
     const [amsl, setAmsl] = useState(0);
     const [yacc, setYacc] = useState(0);
+    const [distance, setDistance] = useState(0);
+    const [latitude, setLatitude] = useState(0);
 
     const [showWindSpeed, setShowWindSpeed] = useState(false);
 
@@ -65,6 +67,9 @@ export default function App() {
                 if (data.type === "HighresImu-yacc") {
                     setYacc(data.value);
                 }
+                if (data.type === "DistanceSensor-current") {
+                    setDistance(data.value);
+                }
             } catch (e) {
                 console.error(e);
             }
@@ -95,6 +100,7 @@ export default function App() {
                         <Camera />
                     </div>
                     <div className="border border-black w-1/2 h-full overflow-hidden">
+                        Distance is { distance }
                         <Sensors roll={roll} pitch={pitch} yaw={yaw} temperature={temperature} groundspeed={groundspeed} showWindSpeed={showWindSpeed} />
                     </div>
                 </div>

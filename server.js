@@ -91,5 +91,25 @@ reader.on('data', packet => {
                 client.send(JSON.stringify({ type: 'HighresImu-yacc', value: yacc }));
             })
         }
+
+        if (name === 'DistanceSensor') {
+            const currentDistance = data.currentDistance;
+
+            console.log(currentDistance);
+
+            wss.clients.forEach((client) => {
+                client.send(JSON.stringify({ type: 'DistanceSensor-current', value: currentDistance }));
+            })
+        }
+
+        if (name === 'GpsRawInt') {
+            const lat = data.lat / 1e7;
+            const lon = data.lon / 1e7;
+
+            wss.clients.forEach((client) => {
+                client.send(JSON.stringify({type: 'GpsRawInt-lat', value: lat}));
+                client.send(JSON.stringify({type: 'GpsRawInt-lon', value: lon}));
+            })
+        }
     }
 })
