@@ -91,7 +91,6 @@ export default function ThreeDModel({ roll, pitch, yaw }) {
             model.rotation.x = -pitch || 0;
         }
 
-        console.log(model.rotation.z);
     }, [roll, pitch, yaw]);
 
     return (
