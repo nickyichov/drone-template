@@ -6,7 +6,7 @@ import ThreeDModel from "./Views/ThreeDModel.jsx";
 import Settings from "./Views/Settings.jsx"
 import Map from "./Views/Map.jsx";
 
-export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groundspeed, title, showWindSped }) {
+export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groundspeed, title, showWindSped, longitude, latitude }) {
     const [selectInformation, setSelectInformation] = useState("aileron");
 
     const handleSelectInformation = (info) => {
@@ -70,7 +70,7 @@ export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groun
                        }
                    </div>
                    <div className="flex h-1/2 items-start p-2">
-                       <ConstantSensors temperature={temperature} />
+                       <ConstantSensors temperature={temperature} latitude={latitude} longitude={longitude} />
                    </div>
                </div>
            </div>
@@ -78,7 +78,7 @@ export default function Sensors({ roll, pitch, yaw, temperature, airspeed, groun
    )
 }
 
-function ConstantSensors({ temperature }) {
+function ConstantSensors({ temperature, latitude, longitude }) {
     const [distance, setDistance] = useState(2);
     const [battery, setBattery] = useState(25);
     const [batteryCapacity, setBatteryCapacity] = useState(5000);
@@ -202,11 +202,11 @@ function ConstantSensors({ temperature }) {
                         <div className="text-blue-800 text-sm">
                             <div className="flex gap-2">
                                 <p>Lat:</p>
-                                <p>2.545</p>
+                                <p>{latitude}</p>
                             </div>
                             <div className="flex justify-between">
                                 <p>Lon:</p>
-                                <p>0.45</p>
+                                <p>{longitude}</p>
                             </div>
                         </div>
                     </div>

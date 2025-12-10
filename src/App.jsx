@@ -24,6 +24,7 @@ export default function App() {
     const [yacc, setYacc] = useState(0);
     const [distance, setDistance] = useState(0);
     const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
 
     const [showWindSpeed, setShowWindSpeed] = useState(false);
 
@@ -70,6 +71,12 @@ export default function App() {
                 if (data.type === "DistanceSensor-current") {
                     setDistance(data.value);
                 }
+                if (data.type === "GpsRawInt-lat") {
+                    setLatitude(data.value)
+                }
+                if (data.type === "GpsRawInt-lon") {
+                    setLongitude(data.value)
+                }
             } catch (e) {
                 console.error(e);
             }
@@ -101,7 +108,9 @@ export default function App() {
                     </div>
                     <div className="border border-black w-1/2 h-full overflow-hidden">
                         Distance is { distance }
-                        <Sensors roll={roll} pitch={pitch} yaw={yaw} temperature={temperature} groundspeed={groundspeed} showWindSpeed={showWindSpeed} />
+                        <Sensors roll={roll} pitch={pitch} yaw={yaw}
+                                 temperature={temperature} groundspeed={groundspeed} showWindSpeed={showWindSpeed}
+                                 latitude={latitude} longitude={longitude} />
                     </div>
                 </div>
             </div>
