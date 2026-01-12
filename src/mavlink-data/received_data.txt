@@ -1,0 +1,237 @@
+Altitude {
+  timeUsec: 6165894197n,
+  altitudeMonotonic: -89.81773376464844,
+  altitudeAmsl: -89.81773376464844,                 - altitude above mean sea level
+  altitudeLocal: 5.454479217529297,
+  altitudeRelative: 5.454479217529297,
+  altitudeTerrain: 5.347718715667725,
+  bottomClearance: 0.10676050186157227              - estimated distance to ground
+}
+
+Attitude {
+  timeBootMs: 6165890,
+  roll: 0.1719224601984024,                         - left/right
+  pitch: 0.06090044975280762,                       - up/down
+  yaw: 2.6546683311462402,                          - left/right x axis
+  rollspeed: -0.009589402005076408,                 - angular rates in rad/s (gyroscope-derived)
+  pitchspeed: -0.001436810358427465,                - angular rates in rad/s (gyroscope-derived)
+  yawspeed: -0.0006494952831417322                  - angular rates in rad/s (gyroscope-derived)
+}
+
+AttitudeQuaternion {
+  timeBootMs: 6165890,
+  q1: 0.24259953200817108,                          - alternate orientation representation
+  q2: -0.008751487359404564,                        - alternate orientation representation
+  q3: 0.09059706330299377,                          - alternate orientation representation
+  q4: 0.9658474326133728,                           - alternate orientation representation
+  rollspeed: -0.009589402005076408,
+  pitchspeed: -0.001436810358427465,
+  yawspeed: -0.0006494952831417322,
+  reprOffsetQ: [ 0, 0, 0, 0 ]
+}
+
+AttitudeTarget {
+  timeBootMs: 6165891,
+  typeMask: 0,
+  q: [ 0.24106411635875702, 0, 0, 0.9705091714859009 ],     - desired attitude (setpoint), can be compared with actual Attitude for control error
+  bodyRollRate: -1.1149811744689941,                - target angular rates from the controller
+  bodyPitchRate: -0.3656161427497864,               - target angular rates from the controller
+  bodyYawRate: 0.020956750959157944,                - target angular rates from the controller
+  thrust: 0                                         - desired throttle value (0–1 scale). Controlling the engine power by regulating the amount of fuel entering the engine
+}
+
+EstimatorStatus {
+  timeUsec: 6165890545n,
+  flags: 229,                                       - bitmask showing which sensors are being used
+  velRatio: 0,
+  posHorizRatio: 0.000057185268815374,              - estimated accuracy of position (meters)
+  posVertRatio: 0.000057185268815374,               - estimated accuracy of position (meters)
+  magRatio: 0.004947321489453316,
+  haglRatio: 0,
+  tasRatio: 0,
+  posHorizAccuracy: 0.31380993127822876,
+  posVertAccuracy: 0.49817898869514465
+}
+
+ExtendedSysState {
+  vtolState: 0,
+  landedState: 1                                    - 1 = landed, 0 = flying
+}
+
+HighresImu (Inertial Measurement Unit) {            - measurements based on how fast a plane rotates around its axes
+  timeUsec: 6165890545n,
+  xacc: 0.6253015398979187,                         - acceleration (linear velocity)
+  yacc: -1.7128576040267944,                        - acceleration (linear velocity)
+  zacc: -9.614052772521973,                         - acceleration (linear velocity)
+  xgyro: -0.01580105721950531,                      - angular velocity
+  ygyro: -0.001129352254793048,                     - angular velocity
+  zgyro: -0.0018397128442302346,                    - angular velocity
+  xmag: -0.17981140315532684,                       - magnetic field readings
+  ymag: -0.00826562475413084,                       - magnetic field readings
+  zmag: 0.424146831035614,                          - magnetic field readings
+  absPressure: 102408.5,
+  diffPressure: 0,
+  pressureAlt: -89.81773376464844,
+  temperature: 43.66999816894531,
+  fieldsUpdated: 7167,
+  id: 0
+}
+
+ScaledImu {
+  timeBootMs: 6165890,
+  xacc: 63,
+  yacc: -174,
+  zacc: -981,
+  xgyro: -15,
+  ygyro: 0,
+  zgyro: -1,
+  xmag: -168,
+  ymag: 6,
+  zmag: 429,
+  temperature: 0
+}
+
+ScaledImu2 {
+  timeBootMs: 6165894,
+  xacc: 50,
+  yacc: -170,
+  zacc: -979,
+  xgyro: -19,
+  ygyro: -3,
+  zgyro: -5,
+  xmag: 0,
+  ymag: 0,
+  zmag: 0,
+  temperature: 0
+}
+
+Vibration {
+  timeUsec: 6165894763n,
+  vibrationX: 2.587798308972822e-10,
+  vibrationY: 0.00002066496199404355,
+  vibrationZ: 0.0002587577037047595,
+  clipping0: 0,
+  clipping1: 0,
+  clipping2: 0
+}
+
+LocalPositionNed {
+  timeBootMs: 6166120,
+  x: 0,
+  y: 0,
+  z: -5.448586940765381,
+  vx: -0.0035263358149677515,
+  vy: 0.003021745942533016,
+  vz: -0.006615681108087301
+}
+
+Heartbeat {                     - shows system status
+  type: 2,
+  autopilot: 12,
+  baseMode: 81,
+  customMode: 65536,
+  systemStatus: 3,
+  mavlinkVersion: 3
+}
+
+Ping {                          - used to measure latency between systems
+  timeUsec: 6166285047n,
+  seq: 6164,
+  targetSystem: 0,
+  targetComponent: 0
+}
+
+ServoOutputRaw {
+  timeUsec: 1871341442,
+  port: 0,
+  servo1Raw: 900,
+  servo2Raw: 900,
+  servo3Raw: 900,
+  servo4Raw: 900,
+  servo5Raw: 0,
+  servo6Raw: 0,
+  servo7Raw: 0,
+  servo8Raw: 0,
+  servo9Raw: 0,
+  servo10Raw: 0,
+  servo11Raw: 0,
+  servo12Raw: 0,
+  servo13Raw: 0,
+  servo14Raw: 0,
+  servo15Raw: 0,
+  servo16Raw: 0
+}
+
+VfrHud {
+  airspeed: 0,
+  groundspeed: 0.004518228583037853,
+  heading: 152,
+  throttle: 0,
+  alt: -89.69618225097656,
+  climb: 0.006734596565365791
+}
+
+ActuatorControlTarget {
+  timeUsec: 6166434425n,
+  groupMlx: 0,
+  controls: [
+    -0.15473492443561554,
+    -0.05099129676818848,
+    0.004261057358235121,
+    0,
+    0,
+    0,
+    0,
+    -1
+  ]
+}
+
+TimeSync {                      - synchronizes timestamps between flight controller and companion computer
+  tc1: 0n,
+  ts1: 6166516234000n,
+  targetSystem: 0,
+  targetComponent: 0
+}
+
+BatteryStatus {                 - Critical for monitoring battery health, predicting endurance, or detecting power faults.
+  id: 0,
+  batteryFunction: 1,
+  type: 1,
+  temperature: 32767,
+  voltages: [
+    65535, 65535, 65535,
+    65535, 65535, 65535,
+    65535, 65535, 65535,
+    65535
+  ],
+  currentBattery: -1,
+  currentConsumed: -1,
+  energyConsumed: -1,
+  batteryRemaining: -1,
+  timeRemaining: 0,
+  chargeState: 0,
+  voltagesExt: [ 0, 0, 0, 0 ],
+  mode: 0,
+  faultBitmask: 0
+}
+
+SysStatus {
+  onboardControlSensorsPresent: 304480299,
+  onboardControlSensorsEnabled: 304152623,
+  onboardControlSensorsHealth: 2490379,
+  load: 435,                                        - shows which sensors are enabled, their health, and CPU load (load: 435 → 43.5%)
+  voltageBattery: 65535,
+  currentBattery: -1,
+  batteryRemaining: -1,
+  dropRateComm: 0,
+  errorsComm: 0,
+  errorsCount1: 0,
+  errorsCount2: 0,
+  errorsCount3: 0,
+  errorsCount4: 0,
+  onboardControlSensorsPresentExtended: 0,
+  onboardControlSensorsEnabledExtended: 0,
+  onboardControlSensorsHealthExtended: 0
+}
+
+SystemTime { timeUnixUsec: 1759407522077430n, timeBootMs: 6173911 }
