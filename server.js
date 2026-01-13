@@ -95,8 +95,6 @@ reader.on('data', packet => {
         if (name === 'DistanceSensor') {
             const currentDistance = data.currentDistance;
 
-            console.log(currentDistance);
-
             wss.clients.forEach((client) => {
                 client.send(JSON.stringify({ type: 'DistanceSensor-current', value: currentDistance }));
             })
