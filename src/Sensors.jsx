@@ -85,8 +85,9 @@ function ConstantSensors({ temperature, latitude, longitude }) {
 
     const voltage = 14.8; // V
     const powerDraw = 150 ; // W
-    const flightTime = Number.parseFloat((batteryCapacity * voltage * 0.85) / (powerDraw * 60)).toFixed(2);
-
+    const flightTime = Number.parseFloat(
+        (((batteryCapacity * voltage * 0.85) / powerDraw) * 60) / 1000
+    ).toFixed(2);
     return (
         <>
             <div>
@@ -115,7 +116,7 @@ function ConstantSensors({ temperature, latitude, longitude }) {
                         <label>
                             Battery Capacity:
                             <input
-                                className="w-10 border p-1 rounded-md mx-2"
+                                className="w-14 border p-1 rounded-md mx-2"
                                 value={batteryCapacity}
                                 onChange={e => setBatteryCapacity(e.target.value)}
                             />

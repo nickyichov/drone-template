@@ -107,7 +107,6 @@ export default function App() {
                         <Camera />
                     </div>
                     <div className="border border-black w-1/2 h-full overflow-hidden">
-                        Distance is { distance }
                         <Sensors roll={roll} pitch={pitch} yaw={yaw}
                                  temperature={temperature} groundspeed={groundspeed} showWindSpeed={showWindSpeed}
                                  latitude={latitude} longitude={longitude} />
